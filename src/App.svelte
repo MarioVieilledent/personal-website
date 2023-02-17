@@ -10,11 +10,10 @@
   <title>{title}</title>
 </svelte:head>
 
-<div class="container fc">
+<div class="all fc">
   <Router>
     <nav class="navbar f">
-      <Link to="/"><span class="link f">Base</span></Link>
-      <Link to="home"><span class="link f">Home</span></Link>
+      <Link to=""><span class="link f">Home</span></Link>
       <Link to="playground"><span class="link f">Playground</span></Link>
     </nav>
     <div class="content fc">
@@ -28,15 +27,13 @@
 <style lang="scss">
   $navbar-height: 36px;
 
-  .container {
+  .all {
     width: 100%;
     height: 100%;
 
     .navbar {
       width: 100%;
       height: $navbar-height;
-      position: fixed;
-      top: 0;
       background-color: #454545;
 
       .link {
@@ -47,7 +44,9 @@
     }
 
     .content {
-      margin-top: $navbar-height;
+      width: 100%;
+      height: calc(100% - $navbar-height);
+      overflow: auto;
     }
   }
 </style>

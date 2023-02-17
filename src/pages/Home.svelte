@@ -4,11 +4,7 @@
   const registerFocus = useFocus();
 </script>
 
-<div class="container fc">
-  <span>Home</span>
-</div>
+<div class="home fc" />
 
 <style lang="scss">
-  .container {
-  }
 </style>
