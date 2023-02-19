@@ -1,14 +1,12 @@
 <script lang="ts">
-  import { useFocus } from "svelte-navigator";
-
-  const initialTemplate: string = `<div style="background-color: #555;">
+  const initialTemplate: string = `<div style="display: flex; flex-direction: column; align-items: center">
   <h1>Title</h1>
   <button onclick="alert('Javascript is working')">Click me</button>
+  <input type="date">
+  <img src="./flags/fr.svg" width="144" />
 </div>`;
 
   let input: string = initialTemplate;
-
-  const registerFocus = useFocus();
 </script>
 
 <div class="container f">
@@ -36,6 +34,21 @@
         width: 100%;
         height: 100%;
         resize: none;
+      }
+
+      .textarea:focus {
+        outline: none;
+      }
+    }
+  }
+
+  @media (max-width: 700px) {
+    .container {
+      flex-direction: column;
+
+      .left,
+      .right {
+        width: 100%;
       }
     }
   }

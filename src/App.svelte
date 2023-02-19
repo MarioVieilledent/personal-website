@@ -1,10 +1,21 @@
 <script lang="ts">
-  import { Link, Route, Router } from "svelte-navigator";
   import Countries from "./pages/Countries.svelte";
   import Playground from "./pages/Playground.svelte";
   import Home from "./pages/Home.svelte";
 
+  const pages = ["Home", "Playground", "Countries"];
+  const lsPage = "MarioVieilledentPersonalWebsitePage";
   let title: string = "Mario Vieilledent";
+
+  let currentPage: Page = window.localStorage.getItem(lsPage) as Page;
+  !currentPage ? (currentPage = "Countries") : {};
+
+  function setPage(page: string) {
+    currentPage = page as Page;
+    window.localStorage.setItem(lsPage, page);
+  }
+
+  type Page = "Home" | "Playground" | "Countries";
 </script>
 
 <svelte:head>
@@ -12,23 +23,26 @@
 </svelte:head>
 
 <div class="all fc">
-  <Router>
-    <nav class="navbar f">
-      <Link class="link-nav" to=""><span class="link f">Home</span></Link>
-      <Link class="link-nav" to="playground"
-        ><span class="link f">Playground</span></Link
-      >
-      <Link class="link-nav" to="countries"
-        ><span class="link f">Countries</span></Link
-      >
-    </nav>
-    <div class="content fc">
-      <Route path="/"><Home /></Route>
-      <Route path="home"><Home /></Route>
-      <Route path="playground"><Playground /></Route>
-      <Route path="countries"><Countries /></Route>
-    </div>
-  </Router>
+  <div class="navbar f">
+    {#each pages as page}
+      <button
+        class={currentPage === page ? "link curr f" : "link f"}
+        on:click={() => setPage(page)}
+        >{page}
+      </button>
+    {/each}
+  </div>
+  <div class="content fc">
+    {#if currentPage === "Home"}
+      <Home />
+    {/if}
+    {#if currentPage === "Playground"}
+      <Playground />
+    {/if}
+    {#if currentPage === "Countries"}
+      <Countries />
+    {/if}
+  </div>
 </div>
 
 <style lang="scss">
@@ -45,14 +59,22 @@
 
       .link {
         height: 100%;
-        margin: 0px 12px;
+        padding: 0px 12px;
         align-items: center;
         color: #eee;
+        cursor: pointer;
+        background-color: transparent;
+        border: none;
+        transition: background-color 0.2s;
       }
-    }
 
-    .navbar :global(.link-nav) {
-      text-decoration: none;
+      .link:hover {
+        background-color: #606060;
+      }
+
+      .curr {
+        background-color: #565656;
+      }
     }
 
     .content {
